@@ -1,7 +1,7 @@
 (ns leiningen.deb
   (:use leiningen.deb.tasks
        [leiningen.jar :only [jar get-jar-filename get-default-jar-name]])
-  (:require [clojure.contrib.string :as s]))
+  (:require [clojure.string :as s]))
 
 (defn- default-deb-spec
   [project]
@@ -15,7 +15,7 @@
 (defn deb
   "Build a debian package of this project."
   [project]
-  (let [[upstream debian] (s/split #"-" (:version project))
+  (let [[upstream debian] (s/split (:version project) #"-")
         ;; SNAPSHOTs should get unix timestamp based 'debian version'
         debian (if (= "SNAPSHOT" debian)
                  (str "~e" (System/currentTimeMillis))
